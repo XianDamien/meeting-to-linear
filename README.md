@@ -5,10 +5,10 @@ A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill that autom
 ## What It Does
 
 ```
-Meeting Video → Upload to OSS → ASR Transcription → Summary → Linear Issues → Linear Document → Email Notification → WeChat Message
+Meeting Video → ASR Transcription → Summary → Linear Issues → Linear Document → Email Notification → WeChat Message
 ```
 
-- **Video Processing**: Upload meeting videos to Aliyun OSS and transcribe via Qwen ASR
+- **Video Processing**: Transcribe meeting videos locally via Qwen ASR (optional: upload to OSS for video playback links)
 - **Meeting Summary**: Generate structured meeting summaries with key decisions and action items
 - **Linear Issues**: Batch-create Linear issues with proper priority, labels, assignees, and parent-child relationships
 - **Linear Documents**: Create meeting minutes as Linear documents linked to a project
@@ -27,9 +27,12 @@ git clone https://github.com/damien-cli/meeting-to-linear.git ~/.claude/skills/m
 cd ~/.claude/skills/meeting-to-linear
 pip install -r requirements.txt
 
-# Install OSS/ASR dependencies (optional, for video processing)
+# Install transcription dependencies
 cd oss-config
 uv sync
+
+# (Optional) Install OSS upload support
+uv sync --extra oss
 ```
 
 ### Manual Setup
@@ -114,8 +117,9 @@ meeting-to-linear/
 │   ├── parent-child-issues.md  # Parent-child issue rules
 │   ├── user-mapping.md         # Team member mapping reference
 │   └── known-issues.md         # Troubleshooting guide
-├── oss-config/                 # Video upload & transcription
+├── oss-config/                 # Video transcription & optional OSS upload
 │   ├── process_meeting_video.py
+│   ├── qwen_asr.py             # Qwen ASR transcription engine
 │   ├── upload_to_oss.py
 │   ├── .env.example
 │   └── pyproject.toml
@@ -132,10 +136,10 @@ All personal settings live in `config.json` (gitignored). See [`config.example.j
 | `email` | SMTP server, sender, auth code |
 | `team_members` | Linear username → real name + email mapping |
 | `default_recipients` | Email notification recipients |
-| `oss` | Aliyun OSS credentials (for video upload) |
+| `oss` | Aliyun OSS credentials (optional, for video upload) |
 | `asr` | Qwen/DashScope API key (for transcription) |
 
-For the video processing pipeline (`oss-config/`), also create `oss-config/.env` from `oss-config/.env.example`.
+For the video processing pipeline (`oss-config/`), create `oss-config/.env` from `oss-config/.env.example`. Only `DASHSCOPE_API_KEY` is required; OSS credentials are optional (needed only with `--use-oss`).
 
 ## Dependencies
 
@@ -144,9 +148,12 @@ For the video processing pipeline (`oss-config/`), also create `oss-config/.env`
 - **Network proxy** recommended for Linear API access in China (`export ALL_PROXY=socks5://127.0.0.1:7890`)
 
 Optional (for video processing):
-- **oss2** - Aliyun OSS SDK
 - **dashscope** - Qwen ASR API client
+- **librosa**, **soundfile**, **silero-vad** - Audio processing and VAD segmentation
 - [**uv**](https://docs.astral.sh/uv/) - Recommended Python package manager
+
+Optional (for OSS upload):
+- **oss2** - Aliyun OSS SDK (`uv sync --extra oss`)
 
 ## License
 
