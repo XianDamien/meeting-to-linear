@@ -1,0 +1,10 @@
+__pycache__/
+.DS_Store
+.venv/
+*.pyc
+uv.lock
+
+# Personal config (contains sensitive data)
+config.json
+oss-config/.env
+reports/

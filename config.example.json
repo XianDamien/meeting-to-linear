@@ -1,0 +1,47 @@
+{
+  "linear": {
+    "team_name": "YourTeam",
+    "project_name": "YourProject",
+    "api_key_path": "~/.linear/config"
+  },
+  "email": {
+    "smtp_server": "smtp.qq.com",
+    "smtp_port": 465,
+    "imap_server": "imap.qq.com",
+    "imap_port": 993,
+    "sender_email": "sender@example.com",
+    "auth_code": "your-smtp-auth-code"
+  },
+  "team_members": {
+    "user_a": {
+      "email": "user_a@example.com",
+      "name": "User A",
+      "role": "Frontend"
+    },
+    "user_b": {
+      "email": "user_b@example.com",
+      "name": "User B",
+      "role": "Backend"
+    },
+    "user_c": {
+      "email": "user_c@example.com",
+      "name": "User C",
+      "role": "PM"
+    }
+  },
+  "default_recipients": [
+    "user_a@example.com",
+    "user_b@example.com",
+    "user_c@example.com"
+  ],
+  "oss": {
+    "access_key_id": "your-oss-access-key-id",
+    "access_key_secret": "your-oss-access-key-secret",
+    "endpoint": "oss-cn-shanghai.aliyuncs.com",
+    "bucket_name": "your-bucket-name",
+    "public_base_url": "https://your-bucket.oss-cn-shanghai.aliyuncs.com"
+  },
+  "asr": {
+    "dashscope_api_key": "your-dashscope-api-key"
+  }
+}

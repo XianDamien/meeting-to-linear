@@ -1,0 +1,4 @@
+# Meeting-to-Linear Dependencies
+# Managed by uv
+
+requests>=2.31.0
