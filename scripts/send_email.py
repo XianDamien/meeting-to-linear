@@ -137,7 +137,8 @@ class MailSender:
                             filename = os.path.basename(file_path)
                             part.add_header(
                                 'Content-Disposition',
-                                f'attachment; filename="{filename}"'
+                                'attachment',
+                                filename=('utf-8', '', filename)
                             )
                             message.attach(part)
                             print(f"✓ 添加附件: {filename}")
